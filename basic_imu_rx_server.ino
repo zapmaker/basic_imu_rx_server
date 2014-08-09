@@ -30,7 +30,7 @@ void setup()
   radio.openWritingPipe(pipes[1]);
   radio.startListening();
   radio.printDetails();
-  //Serial.println("Listening..."); 
+  Serial.println("Listening..."); 
 }
 
 void loop()
@@ -129,19 +129,8 @@ bool haveData()
   // if there is data ready
   if ( radio.available() )
   {
-    // Dump the payloads until we've gotten everything
-    unsigned long got_time;
-    bool done = false;
-    while (!done)
-    {
-      // Fetch the payload, and see if this was the last one.
-      done = radio.read( dataIn, PAYLOAD_LEN );
-
-      if (done)
-      {  
-        return true;
-      }
-    }
+    radio.read( dataIn, PAYLOAD_LEN );
+    return true;
   }
   return false;
 }
